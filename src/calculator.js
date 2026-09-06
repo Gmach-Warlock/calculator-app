@@ -14,7 +14,7 @@ export default function calculator(num1, num2, operator) {
     operator !== "subtract" &&
     operator !== "multiply" &&
     operator !== "divide" &&
-    operator !== "exponent"
+    operator !== "percent"
   ) {
     console.log("Invalid operator type");
     return;
@@ -30,7 +30,7 @@ export default function calculator(num1, num2, operator) {
       }
       return num1 / num2;
     },
-    exponent: () => num1 ** num2,
+    percent: (num) => num / 100,
   };
   return String(operateMap[operator]());
 }
