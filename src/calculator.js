@@ -23,7 +23,13 @@ export default function calculator(num1, num2, operator) {
     add: () => num1 + num2,
     subtract: () => num2 - num2,
     multiply: () => num1 * num2,
-    divide: () => num1 / num2,
+    divide: () => {
+      if (num2 === 0) {
+        console.log("Cannot divide by 0!");
+        return;
+      }
+      return num1 / num2;
+    },
     exponent: () => num1 ** num2,
   };
   return String(operateMap[operator]());
