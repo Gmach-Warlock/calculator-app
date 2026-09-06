@@ -1,40 +1,29 @@
 import { useState } from "react";
+import calculator from "./calculator";
 import "./App.css";
 
 function App() {
   const [screenValue, setScreenValue] = useState("0");
   const [tempVal1, setTempVal1] = useState("0");
-  const [number1, setNumber1] = useState(0);
-  const [number2, setNumber2] = useState(0);
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [hasReset, setHasReset] = useState(false);
   const [operator, setOperator] = useState("none");
-
+  const [currentPhase, setCurrentPhase] = useState("getNum1");
   const operatorMap = {
-    add: () => {
-      setNumber1(screenValue);
-      setOperator("add");
-    },
-    subtract: () => {
-      setNumber1(screenValue);
-      setOperator("subtract");
-    },
-    multiply: () => {
-      setNumber1(screenValue);
-      setOperator("multiply");
-    },
-    divide: () => {
-      setNumber1(screenValue);
-      setOperator("divide");
-    },
+    add: () => setOperator("add"),
+    subtract: () => setOperator("subtract"),
+    multiply: () => setOperator("multiply"),
+    divide: () => setOperator("divide"),
   };
-  const handleInput = (input) => {
-    if (Number(input) >= 0 && Number(input) <= 9) {
-      if (screenValue === "0") {
-        setScreenValue(input);
-      } else {
-        setScreenValue(screenValue + input);
-      }
-    }
-  };
+
+  function handleInput(input) {
+    // setup flags
+    const isNumber = Number(input) >= 0 && Number(input) <= 9;
+    const isOperator = Object.keys(operatorMap).includes(input);
+    const isSolve = input === "equals";
+    console.log(`isNumber: ${isNumber}, isOperator: ${isOperator}`);
+  }
 
   return (
     <>
