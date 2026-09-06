@@ -12,12 +12,35 @@ body {
 
 h1 {
   font-family: var(--font-second);
+  font-size: 3rem;
+  background: linear-gradient(
+    to bottom,
+    hsl(60, 100%, 90%),
+    35%,
+    hsl(60, 100%, 50%),
+    65%,
+    hsl(60, 100%, 15%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  justify-self: flex-start;
 }
-.center {
+h2 {
+  background-color: white;
+  color: black;
+}
+header {
+  font-family: var(--font-second);
+  text-align: end;
+  padding-right: 2rem;
+}
+#center {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 85vh;
 }
 
 .calculator {
@@ -27,8 +50,8 @@ h1 {
     -2px -2px 4px white,
     3px 3px 6px rgb(151, 140, 140);
   color: black;
-  max-width: 15rem;
-  min-height: 18rem;
+  width: 15rem;
+  height: 19rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,9 +67,10 @@ h1 {
   margin-bottom: 1rem;
 }
 .screen {
-  padding: 0.25rem;
+  padding: 0.3rem;
   margin-top: 0.25rem;
   margin-bottom: 0.75rem;
+  text-align: end;
 }
 .screen input {
   font-size: large;
@@ -57,7 +81,6 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   padding: 0.2rem;
-  margin: 0.25rem;
 }
 .buttons button {
   padding: 0.2rem;
