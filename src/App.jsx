@@ -9,20 +9,72 @@ function App() {
   const [num2, setNum2] = useState(0);
   const [hasReset, setHasReset] = useState(false);
   const [operator, setOperator] = useState("none");
-  const [currentPhase, setCurrentPhase] = useState("getNum1");
+  const phaseValue = ["get1", "get2", "solve"];
+  const [currentPhase, setCurrentPhase] = useState(phaseValue[0]);
   const operatorMap = {
-    add: () => setOperator("add"),
-    subtract: () => setOperator("subtract"),
-    multiply: () => setOperator("multiply"),
-    divide: () => setOperator("divide"),
+    add: () => {
+      setOperator("add");
+    },
+    subtract: () => {
+      setOperator("subtract");
+    },
+    multiply: () => {
+      setOperator("multiply");
+    },
+    divide: () => {
+      setOperator("divide");
+    },
+
+    clr: () => {
+      setNum1(0);
+      setNum2(0);
+      setOperator("none");
+      setHasReset(false);
+    },
+    ce: () => {
+      setNum2(0);
+      setOperator("none");
+      setHasReset(false);
+    },
+    solve: () => {
+      console.log(`Time to solve!`);
+    },
   };
+  function inputValueHelper(value, currentPhase) {
+    switch (currentPhase) {
+      case currentPhase === "get1": {
+        value === "0" ? setNum1(value) : setNum1(screenValue + value);
+      }
+      case currentPhase === "get2": {
+        setScreenValue("0");
+        setHasReset(true);
+        if (setHasReset) {
+          value === "0" ? setNum2(value) : setNum2(screenValue + value);
+        }
+        return;
+      }
+      default:
+        return;
+    }
+  }
 
   function handleInput(input) {
     // setup flags
-    const isNumber = Number(input) >= 0 && Number(input) <= 9;
+    const isValue = Number(input) >= 0 && Number(input) <= 9 && input === ".";
     const isOperator = Object.keys(operatorMap).includes(input);
-    const isSolve = input === "equals";
-    console.log(`isNumber: ${isNumber}, isOperator: ${isOperator}`);
+    if (!isValue && !isOperator) {
+      console.log(`invalid input`);
+      return;
+    }
+    console.log(`isValue: ${isValue}, isOperator: ${isOperator}`);
+    // Numeric inputs. Need to determine if we are modifying num1 or num2 (use currentPhase)
+    if (isValue) {
+      console.log(`IsValue flow`);
+      inputValueHelper(input, currentPhase);
+    } else {
+      console.log(`IsOperator flow`);
+      operatorMap[input]();
+    }
   }
 
   return (
