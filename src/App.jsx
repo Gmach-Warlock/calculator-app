@@ -9,76 +9,69 @@ function App() {
   const [operator, setOperator] = useState("none");
   const [hasResetScreen, setHasResetScreen] = useState(false);
   const [haveFirstValue, setHaveFirstValue] = useState(false);
-  // operator Maps for state
+
+  const useValueHelper = (input) => {
+    if (!haveFirstValue) {
+      screenValue === "0"
+        ? setScreenValue(input)
+        : setScreenValue(screenValue + input);
+    } else {
+      console.log(`we have first value need to reset display value`);
+      if (!hasResetScreen) {
+        setScreenValue(input);
+        setHasResetScreen(true);
+      } else {
+        setScreenValue(screenValue === "0" ? input : screenValue + input);
+      }
+    }
+  };
+  const useOperatorHelper = (input) => {
+    if (!haveFirstValue) {
+      setNum1(Number(screenValue));
+      setOperator(input);
+      setHaveFirstValue(true);
+    } else {
+      const currentNum2 = Number(screenValue);
+      setNum2(currentNum2);
+      console.log(
+        `We need to solve! num1: ${num1} num2: ${num2}operator: ${operator}`,
+      );
+      const answer = calculator(num1, num2, operator);
+      console.log(answer);
+      setScreenValue(answer);
+      setNum1(Number(answer));
+      setOperator(input);
+      setHasResetScreen(false);
+    }
+  };
   const handleInput = (input) => {
-    const isValue = (Number(input) >= 0 && Number(input) <= 9) || input === ".";
-    const isOperator =
+    if ((Number(input) >= 0 && Number(input) <= 9) || input === ".") {
+      useValueHelper(input);
+    } else if (
       input === "add" ||
       input === "subtract" ||
       input === "multiply" ||
-      input === "divide" ||
-      "percent";
-    const isOther = input === "equals" || input === "clr" || input === "ce";
-    // handle values
-    if (isValue) {
-      // on first value
-      if (!haveFirstValue) {
-        screenValue === "0"
-          ? setScreenValue(input)
-          : setScreenValue(screenValue + input);
-      } else {
-        // on second value
-        if (!hasResetScreen) {
-          screenValue = "0";
-          setHasResetScreen(true);
-        }
-        if (hasResetScreen) {
-          screenValue === "0"
-            ? setScreenValue(input)
-            : setScreenValue(screenValue + input);
-        }
+      input === "divide"
+    ) {
+      // useOperator
+      useOperatorHelper(input);
+    } else {
+      console.log(`In the other bracket now`);
+      if (input === "equals") {
+        const currentNum2 = Number(screenValue);
+        setNum2(currentNum2);
+        console.log(`solving now!`);
+        let answer = calculator(num1, currentNum2, operator);
+        console.log(answer);
+        setScreenValue(answer);
+        setNum1(Number(answer));
+        setHaveFirstValue(false);
+        setHasResetScreen(false);
+        setOperator("none");
       }
-    }
-    // handle operators
-    if (isOperator) {
-      if (!haveFirstValue) {
-        setNum1(Number(screenValue));
-        setOperator(input);
-        setHaveFirstValue(true);
-      } else {
-        setNum2(Number(screenValue));
-        setScreenValue(calculator(num1, num2, operator));
-        setNum1(screenValue);
-      }
-    }
-    // handle other buttons
-    if (isOther) {
-      const otherMap = {
-        equals: () => {
-          setScreenValue(calculator(num1, num2, operator));
-          setNum1(screenValue);
-          setNum2(0);
-        },
-        clr: () => {
-          setScreenValue("0");
-          setNum1(0);
-          setNum2(0);
-          setHaveFirstValue(false);
-          setHasResetScreen(false);
-        },
-        ce: () => {
-          setScreenValue("0");
-          if (haveFirstValue) {
-            setNum2("0");
-          } else {
-            setNum1("0");
-            setOperator("none");
-          }
-        },
-      };
-      otherMap[input]();
     }
   };
+
   return (
     <>
       <header>
