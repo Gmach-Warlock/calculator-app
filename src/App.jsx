@@ -68,6 +68,21 @@ function App() {
         setHaveFirstValue(false);
         setHasResetScreen(false);
         setOperator("none");
+      } else if (input === "ce") {
+        if (haveFirstValue) {
+          setNum2(0);
+          setScreenValue("0");
+          setHasResetScreen(false);
+        } else {
+          setNum1("0");
+          setScreenValue("0");
+        }
+      } else if (input === "clr") {
+        setNum1(0);
+        setNum2(0);
+        setScreenValue("0");
+        setHasResetScreen(false);
+        setHaveFirstValue(false);
       }
     }
   };

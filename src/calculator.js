@@ -21,7 +21,7 @@ export default function calculator(num1, num2, operator) {
   }
   const operateMap = {
     add: () => num1 + num2,
-    subtract: () => num2 - num2,
+    subtract: () => num1 - num2,
     multiply: () => num1 * num2,
     divide: () => {
       if (num2 === 0) {
